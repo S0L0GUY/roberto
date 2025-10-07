@@ -4,24 +4,23 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.hardware.TalonFX;
-
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
-  private TalonFX frontRightMotor;
-  private TalonFX frontLeftMotor;
-  private TalonFX backRightMotor;
-  private TalonFX backLeftMotor;
+  private Talon frontRightMotor;
+  private Talon frontLeftMotor;
+  private Talon backRightMotor;
+  private Talon backLeftMotor;
 
   public Drivetrain() {
-    frontRightMotor = new TalonFX(RobotMap.mapDrivetrain.FRONT_RIGHT_MOTOR);
-    backRightMotor = new TalonFX(RobotMap.mapDrivetrain.BACK_RIGHT_MOTOR);
-    frontLeftMotor = new TalonFX(RobotMap.mapDrivetrain.FRONT_LEFT_MOTOR);
-    backLeftMotor = new TalonFX(RobotMap.mapDrivetrain.BACK_LEFT_MOTOR);
+    frontRightMotor = new Talon(RobotMap.mapDrivetrain.FRONT_RIGHT_MOTOR);
+    backRightMotor = new Talon(RobotMap.mapDrivetrain.BACK_RIGHT_MOTOR);
+    frontLeftMotor = new Talon(RobotMap.mapDrivetrain.FRONT_LEFT_MOTOR);
+    backLeftMotor = new Talon(RobotMap.mapDrivetrain.BACK_LEFT_MOTOR);
   }
 
   /**
