@@ -45,8 +45,8 @@ public class Drivetrain extends SubsystemBase {
     frontRightMotor.set(forwardVelocity - rotationSpeed);
     backRightMotor.set(forwardVelocity - rotationSpeed);
     // Set left velocity
-    frontLeftMotor.set(forwardVelocity + rotationSpeed);
-    backLeftMotor.set(forwardVelocity + rotationSpeed);
+    frontLeftMotor.set(forwardVelocity - rotationSpeed);
+    backLeftMotor.set(forwardVelocity - rotationSpeed);
   }
 
   @Override
