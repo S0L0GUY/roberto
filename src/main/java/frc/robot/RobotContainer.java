@@ -23,7 +23,6 @@ public class RobotContainer {
 
   private final Drivetrain subDrivetrain = new Drivetrain();
   private final StateMachine subStateMachine = new StateMachine(subDrivetrain);
-  private final RobotPoses robotPose = new RobotPoses(subDrivetrain);
 
   // Commands
   Command TRY_NONE = Commands.deferredProxy(
