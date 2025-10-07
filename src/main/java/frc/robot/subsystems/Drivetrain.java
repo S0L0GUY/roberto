@@ -31,7 +31,7 @@ public class Drivetrain extends SubsystemBase {
    *                        drivetrain.
    * @param rotationSpeed   The rotation speed to apply to the drivetrain.
    * @param slowModeActivated A boolean indicating whether slow mode is activated or not.
-   *                          If true, the speed will be divided by 2.
+   *                          If true, the speed will be multiplied by the slow mode multiplier.
    */
   public void setDrivetrainSpeed(double forwardVelocity, double rotationSpeed, boolean slowModeActivated) {
     // Divide speed in half if slow mode is activated
