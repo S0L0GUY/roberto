@@ -4,65 +4,50 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.*;
-
-import java.lang.Thread.State;
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.constDrivetrain;
-import frc.robot.Constants.constField;
-import frc.robot.subsystems.StateMachine.DriverState;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+
+import frc.robot.subsystems.Drivetrain;
 
 public class DriveManual extends Command {
-  Drivetrain subDrivetrain;
-  DoubleSupplier xAxis, yAxis, rotationAxis;
-  boolean isOpenLoop;
-  double redAllianceMultiplier = 1;
-  StateMachine subStateMachine;
+  /** Creates a new Drive. */
 
-  public DriveManual(Drivetrain subDrivetrain, StateMachine subStateMachine, DoubleSupplier xAxis, DoubleSupplier yAxis,
-      DoubleSupplier rotationAxis) {
-    this.subDrivetrain = subDrivetrain;
-    this.subStateMachine = subStateMachine;
-    this.xAxis = xAxis;
-    this.yAxis = yAxis;
-    this.rotationAxis = rotationAxis;
+  Drivetrain globalDrivetrain;
+  DoubleSupplier globalForwardSpeed;
+  DoubleSupplier globalRotationSpeed;
+  Trigger globalSlowMode;
 
-    isOpenLoop = true;
-
-    addRequirements(this.subDrivetrain);
-    addRequirements(this.subStateMachine);
+  public DriveManual(Drivetrain passedDrivetrain, DoubleSupplier passedForwardSpeed, DoubleSupplier passedRotationSpeed,
+      Trigger passedSlowMode) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    globalDrivetrain = passedDrivetrain;
+    globalForwardSpeed = passedForwardSpeed;
+    globalRotationSpeed = passedRotationSpeed;
+    globalSlowMode = passedSlowMode;
+    addRequirements(globalDrivetrain);
   }
 
+  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    redAllianceMultiplier = constField.isRedAlliance() ? -1 : 1;
   }
 
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // Get Joystick inputs
-    double xVelocity = xAxis.getAsDouble() * constDrivetrain.REAL_DRIVE_SPEED.in(Units.MetersPerSecond)
-        * redAllianceMultiplier;
-    double yVelocity = -yAxis.getAsDouble() * constDrivetrain.REAL_DRIVE_SPEED.in(Units.MetersPerSecond)
-        * redAllianceMultiplier;
-    double rVelocity = -rotationAxis.getAsDouble() * constDrivetrain.TURN_SPEED.in(Units.RadiansPerSecond);
-
-    subDrivetrain.drive(
-        new Translation2d(xVelocity, yVelocity), rVelocity, isOpenLoop);
-
-    subStateMachine.setDriverState(StateMachine.DriverState.MANUAL);
+    globalDrivetrain.setDrivetrainSpeed(globalForwardSpeed.getAsDouble(), globalRotationSpeed.getAsDouble(),
+        globalSlowMode.getAsBoolean());
 
   }
 
+  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    subDrivetrain.neutralDriveOutputs();
   }
 
+  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
